@@ -1,4 +1,4 @@
-# README #
+# UOCIS322 - Project 1 #
 
 A "getting started" project for CIS 322, introduction to software engineering,
 at the University of Oregon.
@@ -28,7 +28,7 @@ therefore using a port number above 1000.
 ### Assignment ###
 
 * Fork this repository to create your own repository on GitHub,
-and make sure it is PRIVATE. Be sure to add me as collaborator so I have access.
+and make sure it is PUBLIC. Be sure to add me as collaborator so I have access.
 (Read the documentation as needed, and create an account on GitHub
   if you don't have one.
   You should've already done finished this as part of Project 0.)
@@ -69,7 +69,11 @@ Deployment should work "out of the box" with this command sequence:
   ```
 
   ```
-  make run or make start
+  make run
+  ```
+  or
+  ```
+  make start
   ```
 
   *test it with a browser now; send a request*
@@ -102,4 +106,4 @@ Assuming the credentials.ini is submitted with the correct URL of your repo.
 
 ### Credits ###
 
-Ram Durairajan, Steven Walton, Joe Istas, Michal Yong
+Michal Young, Ram Durairajan, Steven Walton, Joe Istas.
