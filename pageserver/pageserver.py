@@ -13,6 +13,8 @@
   program is run).
 """
 
+import os # Needed for finding files under DOCROOT
+
 import config    # Configure from .ini files and command line
 import logging   # Better than print statements
 logging.basicConfig(format='%(levelname)s:%(message)s',
@@ -90,9 +92,30 @@ def respond(sock):
     log.info("Request was {}\n***\n".format(request))
 
     parts = request.split()
+
+    # parse DOCROOT from the .ini file
+    options = config.configuration()
+    DOCROOT = options.DOCROOT
+
+    # set the symbols that cause 403 forbidden error
+    forbidden_symbols = ["//", "~", ".."]    
+
     if len(parts) > 1 and parts[0] == "GET":
-        transmit(STATUS_OK, sock)
-        transmit(CAT, sock)
+        # part (c)
+        check_symbol = [symbol for symbol in forbidden_symbols if symbol in parts[1]] 
+        if len(check_symbol) > 0:
+            transmit(STATUS_FORBIDDEN, sock)
+            transmit("\nI don't handle this request: {}\n".format(request), sock)
+        else: 
+            path_to_file = os.path.join(DOCROOT, parts[1][1:])
+            if not os.path.isfile(path_to_file):
+                transmit(STATUS_NOT_FOUND, sock)
+                transmit("\nI don't handle this request: {}\n".format(request), sock)
+            else:
+                with open(path_to_file, 'r') as f:
+                    msg = f.read()
+                    transmit(STATUS_OK, sock)
+                    transmit(msg, sock)
     else:
         log.info("Unhandled request: {}".format(request))
         transmit(STATUS_NOT_IMPLEMENTED, sock)
