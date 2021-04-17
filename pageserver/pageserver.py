@@ -105,12 +105,12 @@ def respond(sock):
         check_symbol = [symbol for symbol in forbidden_symbols if symbol in parts[1]] 
         if len(check_symbol) > 0:
             transmit(STATUS_FORBIDDEN, sock)
-            transmit("\nI don't handle this request: {}\n".format(request), sock)
+            transmit("Forbidden", sock)
         else: 
             path_to_file = os.path.join(DOCROOT, parts[1][1:])
             if not os.path.isfile(path_to_file):
                 transmit(STATUS_NOT_FOUND, sock)
-                transmit("\nI don't handle this request: {}\n".format(request), sock)
+                transmit("The file you requested was not found!")
             else:
                 with open(path_to_file, 'r') as f:
                     msg = f.read()
