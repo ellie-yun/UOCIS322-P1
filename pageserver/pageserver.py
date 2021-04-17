@@ -110,7 +110,7 @@ def respond(sock):
             path_to_file = os.path.join(DOCROOT, parts[1][1:])
             if not os.path.isfile(path_to_file):
                 transmit(STATUS_NOT_FOUND, sock)
-                transmit("The file you requested was not found!")
+                transmit("The file you requested was not found!", sock)
             else:
                 with open(path_to_file, 'r') as f:
                     msg = f.read()
